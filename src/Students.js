@@ -3,6 +3,12 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { setSchools, setStudents } from './store';
 
+const divStyle = {
+  margin: '20px',
+  display: 'flex',
+  justifyContent: 'space-around'
+};
+
 class _Students extends React.Component {
   componentDidMount(){
     this.props.loadData();
@@ -10,14 +16,14 @@ class _Students extends React.Component {
   render (){
     const { students, schools } = this.props;
     return(
-      <div>
+      <div style ={divStyle}>
           {
             students.map(student =>
               <div key={student.id}>
               {student.firstName} {student.lastName}
                 <h4>GPA: {student.gpa}</h4>
                 <label>
-                Enroll at:
+                Enrolled at:
                   <select>
                     {
                       schools.map(school=>

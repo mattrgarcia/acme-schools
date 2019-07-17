@@ -48,6 +48,14 @@ const syncAndSeed = async () => {
     gpa: 3.7,
     schoolId: usc.id
   });
+
+  await Student.create({
+    firstName: 'Peter',
+    lastName: 'Parker',
+    email: 'imnotspiderman@gmail.com',
+    gpa: 4.0,
+    schoolId: calPoly.id
+  });
 }
 
 

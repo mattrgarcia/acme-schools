@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import { setSchools, setStudents } from './store';
 import {Link} from 'react-router-dom';
 
+const divStyle = {
+  margin: '20px',
+  display: 'flex',
+  justifyContent: 'space-around'
+};
+
 class _Schools extends Component {
   componentDidMount(){
     this.props.loadData();
@@ -11,7 +17,7 @@ class _Schools extends Component {
   render(){
     const {schools} = this.props;
     return(
-      <div>
+      <div style={divStyle}>
           {
             schools.map(school => <div key={school.id}><Link to ="/schools/:id">{school.name}</Link></div>)
           }
