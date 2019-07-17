@@ -32,20 +32,21 @@ app.get('/students', async (req, res, next) => {
   }
 });
 
-app.post('/', async (req, res, next) => {
-  try {
-    await models.Student.create({
-      where: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        gpa: req.body.gpa
-      }
-    })
 
-  } catch (ex) {
-    next(ex)
-  }
-})
+// app.post('/', async (req, res, next) => {
+//   try {
+//     await models.Student.create({
+//       where: {
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         email: req.body.email,
+//         gpa: req.body.gpa
+//       }
+//     })
+//
+//   } catch (ex) {
+//     next(ex)
+//   }
+// })
 
 module.exports = app;

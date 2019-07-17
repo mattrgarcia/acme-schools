@@ -36,17 +36,17 @@ const syncAndSeed = async () => {
   await db.sync({
     force: true
   })
-  await School.create({
-    name: 'Cal Poly'
-  });
-  await School.create({
-    name: 'USC'
-  });
+  const calPoly = await School.create({name: 'Cal Poly'});
+  const usc = await School.create({name: 'USC'});
+  const ucla = await School.create({name: 'UCLA'});
+  const hartnellCollege = await School.create({name: 'Hartnell College'});
+
   await Student.create({
     firstName: 'Matt',
     lastName: 'Garcia',
     email: 'mattgarcia@gmail.com',
-    gpa: 3.7
+    gpa: 3.7,
+    schoolId: usc.id
   });
 }
 
