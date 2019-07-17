@@ -15,11 +15,29 @@ class _Schools extends Component {
     this.props.loadData();
   }
   render(){
-    const {schools} = this.props;
+    const {schools,students} = this.props;
+
     return(
       <div style={divStyle}>
           {
-            schools.map(school => <div key={school.id}><Link to ="/schools/:id">{school.name}</Link></div>)
+            schools.map(school =>
+              <div key={school.id}>
+                <Link to ="/schools/:id">{school.name}</Link>
+                <h5>Student Count {}</h5>
+                <label>
+                Add Student:
+                  <select defaultValue="add student">
+                  <option>--Add Student--</option>
+                    {
+                      students.map(student=>
+                        <option key={student.id} value={student.firstname}>
+                          {student.firstName} {student.lastName}
+                        </option>)
+                    }
+                  </select>
+                </label>
+              </div>
+            )
           }
       </div>
     )
