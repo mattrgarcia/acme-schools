@@ -1,46 +1,74 @@
 import React, {Component} from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { setSchools, setStudents } from './store';
 
-class AddStudent extends React.Component {
-  constructor (){
-    super()
-    this.state = {
-      name: ''
-    }
-    const onSubmit = this.onSubmit.bind(this);
+const formStyle = {
+  width: '100%',
+  padding: '12px 20px',
+  margin: '8px 0',
+  display: 'inline-block',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  boxSizing: 'border-box'
+}
+
+class _AddStudent extends React.Component {
+  componentDidMount(){
+    this.props.loadData();
   }
    onSubmit(ev){
     ev.preventDefault();
   }
   render() {
-    const {onSubmit} = this;
+    const { students,schools } = this.props;
+
     return (
-      <form onSubmit = { onSubmit }>
+      <form style = {formStyle}>
       <label>
         First Name:
-        <input type="text" name="First Name"/>
+        <input type="text" name="firstName"/>
       </label>
       <label>
         Last Name:
-        <input type="text" name="Last Name"/>
+        <input type="text" name="lastName"/>
       </label>
       <label>
         Email:
-        <input type="text" name="Email"/>
+        <input type="text" name="email"/>
       </label>
       <label>
         GPA:
-        <input type="text" name="GPA"/>
+        <input type="text" name="gpa"/>
       </label>
       <label>
       Enroll at:
         <select>
-
+          {
+            schools.map(school=><option key={school.id} value={school.name}>{school.name}</option>)
+          }
         </select>
       </label>
-      <button>Create Student</button>
+      <button>Save</button>
     </form>
     )
   }
-}
+};
 
-export default AddStudent;
+const mapStateToProps = ({schools, students})=> {
+  return {
+    schools,
+    students
+  };
+};
+
+const mapDispatchToProps = (dispatch)=> {
+  return{
+    loadData: ()=>{
+      dispatch(setSchools());
+      dispatch(setStudents());
+    }
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(_AddStudent);

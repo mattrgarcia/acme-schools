@@ -1,24 +1,14 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { setSchools, setStudents } from './store';
 
-class Students extends React.Component {
-  constructor (){
-    super()
-    this.state = {
-      students: []
-    }
-  }
-  async componentDidMount (){
-    try {
-      const response = await axios.get('/api/students')
-      this.setState({students: response.data})
-    }
-    catch(ex){
-      console.log(ex)
-    }
+class _Students extends React.Component {
+  componentDidMount(){
+    this.props.loadData();
   }
   render (){
-    const {students} = this.state;
+    const { students } = this.props;
     return(
       <div>
         <ul>
@@ -31,4 +21,20 @@ class Students extends React.Component {
   }
 }
 
-export default Students;
+const mapStateToProps = ({schools, students})=> {
+  return {
+    schools,
+    students
+  };
+};
+
+const mapDispatchToProps = (dispatch)=> {
+  return{
+    loadData: ()=>{
+      dispatch(setSchools());
+      dispatch(setStudents());
+    }
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(_Students);

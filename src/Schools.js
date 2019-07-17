@@ -1,34 +1,38 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { setSchools, setStudents } from './store';
+import {Link} from 'react-router-dom';
 
-class Schools extends React.Component {
-  constructor (){
-    super()
-    this.state = {
-      schools: []
-    }
-  }
-  async componentDidMount (){
-    try {
-      const response = await axios.get('/api/schools')
-      this.setState({schools: response.data})
-    }
-    catch(ex){
-      console.log(ex)
-    }
+class _Schools extends Component {
+  componentDidMount(){
+    this.props.loadData();
   }
   render(){
-    const {schools} = this.state
+    const {schools} = this.props;
     return(
       <div>
-        <ul>
           {
-            schools.map(school => <li key={school.id}>{school.name}</li>)
+            schools.map(school => <div key={school.id}><Link to ="/schools/:id">{school.name}</Link></div>)
           }
-        </ul>
       </div>
     )
   }
 }
 
-export default Schools;
+const mapStateToProps = ({schools, students})=> {
+  return {
+    schools,
+    students
+  };
+};
+
+const mapDispatchToProps = (dispatch)=> {
+  return{
+    loadData: ()=>{
+      dispatch(setSchools());
+      dispatch(setStudents());
+    }
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(_Schools);
