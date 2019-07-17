@@ -8,14 +8,28 @@ class _Students extends React.Component {
     this.props.loadData();
   }
   render (){
-    const { students } = this.props;
+    const { students, schools } = this.props;
     return(
       <div>
-        <ul>
           {
-            students.map(student => <li key={student.id}>{student.firstName}</li>)
+            students.map(student =>
+              <div key={student.id}>
+              {student.firstName} {student.lastName}
+                <h4>GPA: {student.gpa}</h4>
+                <label>
+                Enroll at:
+                  <select>
+                    {
+                      schools.map(school=>
+                        <option key={school.id} value={school.name}>
+                          {school.name}
+                        </option>)
+                    }
+                  </select>
+                </label>
+              </div>
+            )
           }
-        </ul>
       </div>
     )
   }
