@@ -22,8 +22,8 @@ class _Schools extends Component {
           {
             schools.map(school =>
               <div key={school.id}>
-                <Link to ="/schools/:id">{school.name}</Link>
-                <h5>Student Count {}</h5>
+                <Link to ='/schools/{school.id}'>{school.name}</Link>
+                <h5>Student Count {students.filter(student => student.schoolId === school.id).length}</h5>
                 <label>
                 Add Student:
                   <select defaultValue="add student">

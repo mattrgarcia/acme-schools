@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { setSchools, setStudents } from './store';
+import { setSchools, setStudents, createStudent } from './store';
 
 const formStyle = {
   width: '100%',
@@ -14,32 +14,47 @@ const formStyle = {
 }
 
 class _AddStudent extends React.Component {
-  componentDidMount(){
-    this.props.loadData();
+  constructor (){
+    super()
+    this.state= {
+      firstName: '',
+      lastName: '',
+      email:'',
+      gpa: ''
+    }
+  this.handleChange = this.handleChange.bind(this);
+  this.onCreate = this.onCreate.bind(this);
   }
-   onSubmit(ev){
-    ev.preventDefault();
+  handleChange(ev){
+    this.setState({[ev.target.name]:ev.target.value});
   }
-  render() {
-    const { students,schools } = this.props;
+  onCreate(ev){
+    ev.preventDefault()
+    this.props.createStudent(this.state)
+  }
 
+
+
+  render() {
+    const { schools } = this.props;
+    const {handleChange, onCreate}= this;
     return (
-      <form style = {formStyle}>
+      <form style = {formStyle} onSubmit={onCreate}>
       <label>
         First Name:
-        <input type="text" name="firstName"/>
+        <input type="text" name="firstName" onChange={handleChange}/>
       </label>
       <label>
         Last Name:
-        <input type="text" name="lastName"/>
+        <input type="text" name="lastName" onChange={handleChange}/>
       </label>
       <label>
         Email:
-        <input type="text" name="email"/>
+        <input type="text" name="email" onChange={handleChange}/>
       </label>
       <label>
         GPA:
-        <input type="text" name="gpa"/>
+        <input type="text" name="gpa" onChange={handleChange}/>
       </label>
       <label>
       Enroll at:
@@ -49,7 +64,7 @@ class _AddStudent extends React.Component {
           }
         </select>
       </label>
-      <button>Save</button>
+      <button type='submit'>Save</button>
     </form>
     )
   }
@@ -62,11 +77,10 @@ const mapStateToProps = ({schools, students})=> {
   };
 };
 
-const mapDispatchToProps = (dispatch)=> {
+const mapDispatchToProps = (dispatch, {history})=> {
   return{
-    loadData: ()=>{
-      dispatch(setSchools());
-      dispatch(setStudents());
+    createStudent: (student)=> {
+      return dispatch(createStudent(student, history))
     }
   };
 };

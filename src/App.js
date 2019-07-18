@@ -18,7 +18,7 @@ class _App extends Component {
   <HashRouter >
   <div>
     <Nav />
-    <AddStudent/>
+    <Route component={AddStudent}/>
     <Route exact path="/" component={Home}/>
     <Route path="/schools" component={Schools}/>
     <Route path="schools/:id" component={School}/>
